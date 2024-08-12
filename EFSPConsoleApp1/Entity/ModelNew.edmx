@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+	<!-- EF Runtime content -->
+	<edmx:Runtime>
+		<!-- SSDL content -->
+		<edmx:StorageModels>
+			<Schema Namespace="WorkDayModelNew.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+				<EntityType Name="TaAccountLeave">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+					<Property Name="CoUserID" Type="varchar" MaxLength="20" />
+					<Property Name="CoLeaveType" Type="varchar" MaxLength="20" />
+					<Property Name="CoYear" Type="int" />
+					<Property Name="CoCreated" Type="datetime" />
+					<Property Name="CoUpdated" Type="datetime" />
+					<Property Name="CoOpening" Type="decimal" Precision="18" Scale="0" />
+					<Property Name="CoCredited" Type="decimal" Precision="18" Scale="0" />
+					<Property Name="CoAvailed" Type="decimal" Precision="18" Scale="0" />
+					<Property Name="CoApplied" Type="decimal" Precision="18" Scale="0" />
+					<Property Name="coApproved" Type="decimal" Precision="18" Scale="0" />
+					<Property Name="CoBalance" Type="decimal" Precision="18" Scale="0" />
+				</EntityType>
+				<EntityType Name="TaAttendance">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+					<Property Name="CoUserID" Type="varchar" MaxLength="20" />
+					<Property Name="CoAttendanceType" Type="varchar" MaxLength="500" />
+					<Property Name="CoCreated" Type="datetime" />
+					<Property Name="CoUpdated" Type="datetime" />
+					<Property Name="CoStartTime" Type="time" Precision="7" />
+					<Property Name="CoEndTime" Type="time" Precision="7" />
+				</EntityType>
+				<EntityType Name="TaEmployee">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+					<Property Name="CoUserID" Type="varchar" MaxLength="20" />
+					<Property Name="CoFirstName" Type="varchar" MaxLength="20" />
+					<Property Name="CoLastName" Type="varchar" MaxLength="20" />
+					<Property Name="CoCreated" Type="datetime" />
+					<Property Name="CoUpdated" Type="datetime" />
+					<Property Name="CoRole" Type="varchar" MaxLength="50" />
+					<Property Name="CoAddressLine1" Type="varchar" MaxLength="250" />
+					<Property Name="CoAddressLine2" Type="varchar" MaxLength="250" />
+					<Property Name="CoAddressLine3" Type="varchar" MaxLength="250" />
+					<Property Name="CoDesignation" Type="varchar" MaxLength="25" />
+					<Property Name="CoDepartment" Type="varchar" MaxLength="25" />
+					<Property Name="CoActive" Type="bit" />
+				</EntityType>
+				<EntityType Name="TaHolidayList">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+					<Property Name="CoCreated" Type="datetime" />
+					<Property Name="CoUpdated" Type="datetime" />
+					<Property Name="CoDate" Type="datetime" />
+					<Property Name="CoReason" Type="varchar" MaxLength="20" />
+				</EntityType>
+				<EntityType Name="TaLeave">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+					<Property Name="CoLeaveAccountId" Type="int" />
+					<Property Name="CoUserID" Type="varchar" MaxLength="20" />
+					<Property Name="CoStartdate" Type="datetime" />
+					<Property Name="CoEndDate" Type="datetime" />
+					<Property Name="CoApplydate" Type="datetime" />
+					<Property Name="coReason" Type="varchar" MaxLength="250" />
+					<Property Name="CoStatus" Type="varchar" MaxLength="20" />
+				</EntityType>
+				<EntityType Name="TaLogin">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+					<Property Name="CoUserID" Type="varchar" MaxLength="20" />
+					<Property Name="CologinPassword" Type="varchar" MaxLength="500" />
+					<Property Name="CoCreated" Type="datetime" />
+					<Property Name="CoUpdated" Type="datetime" />
+					<Property Name="CoRole" Type="varchar" MaxLength="50" />
+				</EntityType>
+				<EntityType Name="TaMail">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+					<Property Name="CoUserId" Type="varchar" MaxLength="20" />
+					<Property Name="CoMailType" Type="varchar" MaxLength="500" />
+					<Property Name="CoMailSubject" Type="datetime" />
+					<Property Name="CoSent" Type="datetime" />
+				</EntityType>
+				<Association Name="FK__TaLeave__CoLeave__5FB337D6">
+					<End Role="TaAccountLeave" Type="Self.TaAccountLeave" Multiplicity="0..1" />
+					<End Role="TaLeave" Type="Self.TaLeave" Multiplicity="*" />
+					<ReferentialConstraint>
+						<Principal Role="TaAccountLeave">
+							<PropertyRef Name="CoId" />
+						</Principal>
+						<Dependent Role="TaLeave">
+							<PropertyRef Name="CoLeaveAccountId" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<Function Name="get_data" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+					<Parameter Name="action" Type="bit" Mode="In" />
+				</Function>
+				<EntityContainer Name="WorkDayModelNewStoreContainer">
+					<EntitySet Name="TaAccountLeave" EntityType="Self.TaAccountLeave" Schema="dbo" store:Type="Tables" />
+					<EntitySet Name="TaAttendance" EntityType="Self.TaAttendance" Schema="dbo" store:Type="Tables" />
+					<EntitySet Name="TaEmployee" EntityType="Self.TaEmployee" Schema="dbo" store:Type="Tables" />
+					<EntitySet Name="TaHolidayList" EntityType="Self.TaHolidayList" Schema="dbo" store:Type="Tables" />
+					<EntitySet Name="TaLeave" EntityType="Self.TaLeave" Schema="dbo" store:Type="Tables" />
+					<EntitySet Name="TaLogin" EntityType="Self.TaLogin" Schema="dbo" store:Type="Tables" />
+					<EntitySet Name="TaMail" EntityType="Self.TaMail" Schema="dbo" store:Type="Tables" />
+					<AssociationSet Name="FK__TaLeave__CoLeave__5FB337D6" Association="Self.FK__TaLeave__CoLeave__5FB337D6">
+						<End Role="TaAccountLeave" EntitySet="TaAccountLeave" />
+						<End Role="TaLeave" EntitySet="TaLeave" />
+					</AssociationSet>
+				</EntityContainer>
+			</Schema>
+		</edmx:StorageModels>
+		<!-- CSDL content -->
+		<edmx:ConceptualModels>
+			<Schema Namespace="WorkDayModelNew" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+				<EntityType Name="TaAccountLeave">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="CoUserID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Name="CoLeaveType" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Name="CoYear" Type="Int32" />
+					<Property Name="CoCreated" Type="DateTime" Precision="3" />
+					<Property Name="CoUpdated" Type="DateTime" Precision="3" />
+					<Property Name="CoOpening" Type="Decimal" Precision="18" Scale="0" />
+					<Property Name="CoCredited" Type="Decimal" Precision="18" Scale="0" />
+					<Property Name="CoAvailed" Type="Decimal" Precision="18" Scale="0" />
+					<Property Name="CoApplied" Type="Decimal" Precision="18" Scale="0" />
+					<Property Name="coApproved" Type="Decimal" Precision="18" Scale="0" />
+					<Property Name="CoBalance" Type="Decimal" Precision="18" Scale="0" />
+					<NavigationProperty Name="TaLeaves" Relationship="Self.FK__TaLeave__CoLeave__5FB337D6" FromRole="TaAccountLeave" ToRole="TaLeave" />
+				</EntityType>
+				<EntityType Name="TaAttendance">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="CoUserID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Name="CoAttendanceType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+					<Property Name="CoCreated" Type="DateTime" Precision="3" />
+					<Property Name="CoUpdated" Type="DateTime" Precision="3" />
+					<Property Name="CoStartTime" Type="Time" Precision="7" />
+					<Property Name="CoEndTime" Type="Time" Precision="7" />
+				</EntityType>
+				<EntityType Name="TaEmployee">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="CoUserID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Name="CoFirstName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Name="CoLastName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Name="CoCreated" Type="DateTime" Precision="3" />
+					<Property Name="CoUpdated" Type="DateTime" Precision="3" />
+					<Property Name="CoRole" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+					<Property Name="CoAddressLine1" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+					<Property Name="CoAddressLine2" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+					<Property Name="CoAddressLine3" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+					<Property Name="CoDesignation" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+					<Property Name="CoDepartment" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+					<Property Name="CoActive" Type="Boolean" />
+				</EntityType>
+				<EntityType Name="TaHolidayList">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="CoCreated" Type="DateTime" Precision="3" />
+					<Property Name="CoUpdated" Type="DateTime" Precision="3" />
+					<Property Name="CoDate" Type="DateTime" Precision="3" />
+					<Property Name="CoReason" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+				</EntityType>
+				<EntityType Name="TaLeave">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="CoLeaveAccountId" Type="Int32" />
+					<Property Name="CoUserID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Name="CoStartdate" Type="DateTime" Precision="3" />
+					<Property Name="CoEndDate" Type="DateTime" Precision="3" />
+					<Property Name="CoApplydate" Type="DateTime" Precision="3" />
+					<Property Name="coReason" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+					<Property Name="CoStatus" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+					<NavigationProperty Name="TaAccountLeave" Relationship="Self.FK__TaLeave__CoLeave__5FB337D6" FromRole="TaLeave" ToRole="TaAccountLeave" />
+				</EntityType>
+				<EntityType Name="TaLogin">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="CoUserID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Name="CologinPassword" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+					<Property Name="CoCreated" Type="DateTime" Precision="3" />
+					<Property Name="CoUpdated" Type="DateTime" Precision="3" />
+					<Property Name="CoRole" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+				</EntityType>
+				<EntityType Name="TaMail">
+					<Key>
+						<PropertyRef Name="CoId" />
+					</Key>
+					<Property Name="CoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+					<Property Name="CoUserId" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+					<Property Name="CoMailType" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+					<Property Name="CoMailSubject" Type="DateTime" Precision="3" />
+					<Property Name="CoSent" Type="DateTime" Precision="3" />
+				</EntityType>
+				<Association Name="FK__TaLeave__CoLeave__5FB337D6">
+					<End Role="TaAccountLeave" Type="Self.TaAccountLeave" Multiplicity="0..1" />
+					<End Role="TaLeave" Type="Self.TaLeave" Multiplicity="*" />
+					<ReferentialConstraint>
+						<Principal Role="TaAccountLeave">
+							<PropertyRef Name="CoId" />
+						</Principal>
+						<Dependent Role="TaLeave">
+							<PropertyRef Name="CoLeaveAccountId" />
+						</Dependent>
+					</ReferentialConstraint>
+				</Association>
+				<EntityContainer Name="WorkDayEntitiesNew" annotation:LazyLoadingEnabled="true">
+					<EntitySet Name="TaAccountLeaves" EntityType="Self.TaAccountLeave" />
+					<EntitySet Name="TaAttendances" EntityType="Self.TaAttendance" />
+					<EntitySet Name="TaEmployees" EntityType="Self.TaEmployee" />
+					<EntitySet Name="TaHolidayLists" EntityType="Self.TaHolidayList" />
+					<EntitySet Name="TaLeaves" EntityType="Self.TaLeave" />
+					<EntitySet Name="TaLogins" EntityType="Self.TaLogin" />
+					<EntitySet Name="TaMails" EntityType="Self.TaMail" />
+					<AssociationSet Name="FK__TaLeave__CoLeave__5FB337D6" Association="Self.FK__TaLeave__CoLeave__5FB337D6">
+						<End Role="TaAccountLeave" EntitySet="TaAccountLeaves" />
+						<End Role="TaLeave" EntitySet="TaLeaves" />
+					</AssociationSet>
+					<FunctionImport Name="get_data" >
+						<Parameter Name="action" Mode="In" Type="Boolean" />
+						<ReturnType Type="Collection(WorkDayModelNew.get_data_Result)"/>
+					</FunctionImport>
+					<FunctionImport Name="get_data1" >
+						<Parameter Name="action" Mode="In" Type="Boolean" />
+						<ReturnType Type="Collection(WorkDayModelNew.get_data1_Result)"/>
+					</FunctionImport>
+				</EntityContainer>
+				<ComplexType Name="get_data_Result">
+					<Property Type="Int32" Name="CoId" Nullable="false" />
+					<Property Type="String" Name="CoUserID" Nullable="true" MaxLength="20" />
+					<Property Type="String" Name="CoLeaveType" Nullable="true" MaxLength="20" />
+					<Property Type="Int32" Name="CoYear" Nullable="true" />
+					<Property Type="DateTime" Name="CoCreated" Nullable="true" Precision="23" />
+					<Property Type="DateTime" Name="CoUpdated" Nullable="true" Precision="23" />
+					<Property Type="Decimal" Name="CoOpening" Nullable="true" Precision="18" Scale="0" />
+					<Property Type="Decimal" Name="CoCredited" Nullable="true" Precision="18" Scale="0" />
+					<Property Type="Decimal" Name="CoAvailed" Nullable="true" Precision="18" Scale="0" />
+					<Property Type="Decimal" Name="CoApplied" Nullable="true" Precision="18" Scale="0" />
+					<Property Type="Decimal" Name="coApproved" Nullable="true" Precision="18" Scale="0" />
+					<Property Type="Decimal" Name="CoBalance" Nullable="true" Precision="18" Scale="0" />
+				</ComplexType>
+				<ComplexType Name="get_data1_Result">
+					<Property Type="Int32" Name="CoId" Nullable="false" />
+					<Property Type="Int32" Name="CoLeaveAccountId" Nullable="true" />
+					<Property Type="String" Name="CoUserID" Nullable="true" MaxLength="20" />
+					<Property Type="DateTime" Name="CoStartdate" Nullable="true" Precision="23" />
+					<Property Type="DateTime" Name="CoEndDate" Nullable="true" Precision="23" />
+					<Property Type="DateTime" Name="CoApplydate" Nullable="true" Precision="23" />
+					<Property Type="String" Name="coReason" Nullable="true" MaxLength="250" />
+					<Property Type="String" Name="CoStatus" Nullable="true" MaxLength="20" />
+				</ComplexType>
+			</Schema>
+		</edmx:ConceptualModels>
+		<!-- C-S mapping content -->
+		<edmx:Mappings>
+			<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+				<EntityContainerMapping StorageEntityContainer="WorkDayModelNewStoreContainer" CdmEntityContainer="WorkDayEntitiesNew">
+					<EntitySetMapping Name="TaAccountLeaves">
+						<EntityTypeMapping TypeName="WorkDayModelNew.TaAccountLeave">
+							<MappingFragment StoreEntitySet="TaAccountLeave">
+								<ScalarProperty Name="CoId" ColumnName="CoId" />
+								<ScalarProperty Name="CoUserID" ColumnName="CoUserID" />
+								<ScalarProperty Name="CoLeaveType" ColumnName="CoLeaveType" />
+								<ScalarProperty Name="CoYear" ColumnName="CoYear" />
+								<ScalarProperty Name="CoCreated" ColumnName="CoCreated" />
+								<ScalarProperty Name="CoUpdated" ColumnName="CoUpdated" />
+								<ScalarProperty Name="CoOpening" ColumnName="CoOpening" />
+								<ScalarProperty Name="CoCredited" ColumnName="CoCredited" />
+								<ScalarProperty Name="CoAvailed" ColumnName="CoAvailed" />
+								<ScalarProperty Name="CoApplied" ColumnName="CoApplied" />
+								<ScalarProperty Name="coApproved" ColumnName="coApproved" />
+								<ScalarProperty Name="CoBalance" ColumnName="CoBalance" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="TaAttendances">
+						<EntityTypeMapping TypeName="WorkDayModelNew.TaAttendance">
+							<MappingFragment StoreEntitySet="TaAttendance">
+								<ScalarProperty Name="CoId" ColumnName="CoId" />
+								<ScalarProperty Name="CoUserID" ColumnName="CoUserID" />
+								<ScalarProperty Name="CoAttendanceType" ColumnName="CoAttendanceType" />
+								<ScalarProperty Name="CoCreated" ColumnName="CoCreated" />
+								<ScalarProperty Name="CoUpdated" ColumnName="CoUpdated" />
+								<ScalarProperty Name="CoStartTime" ColumnName="CoStartTime" />
+								<ScalarProperty Name="CoEndTime" ColumnName="CoEndTime" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="TaEmployees">
+						<EntityTypeMapping TypeName="WorkDayModelNew.TaEmployee">
+							<MappingFragment StoreEntitySet="TaEmployee">
+								<ScalarProperty Name="CoId" ColumnName="CoId" />
+								<ScalarProperty Name="CoUserID" ColumnName="CoUserID" />
+								<ScalarProperty Name="CoFirstName" ColumnName="CoFirstName" />
+								<ScalarProperty Name="CoLastName" ColumnName="CoLastName" />
+								<ScalarProperty Name="CoCreated" ColumnName="CoCreated" />
+								<ScalarProperty Name="CoUpdated" ColumnName="CoUpdated" />
+								<ScalarProperty Name="CoRole" ColumnName="CoRole" />
+								<ScalarProperty Name="CoAddressLine1" ColumnName="CoAddressLine1" />
+								<ScalarProperty Name="CoAddressLine2" ColumnName="CoAddressLine2" />
+								<ScalarProperty Name="CoAddressLine3" ColumnName="CoAddressLine3" />
+								<ScalarProperty Name="CoDesignation" ColumnName="CoDesignation" />
+								<ScalarProperty Name="CoDepartment" ColumnName="CoDepartment" />
+								<ScalarProperty Name="CoActive" ColumnName="CoActive" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="TaHolidayLists">
+						<EntityTypeMapping TypeName="WorkDayModelNew.TaHolidayList">
+							<MappingFragment StoreEntitySet="TaHolidayList">
+								<ScalarProperty Name="CoId" ColumnName="CoId" />
+								<ScalarProperty Name="CoCreated" ColumnName="CoCreated" />
+								<ScalarProperty Name="CoUpdated" ColumnName="CoUpdated" />
+								<ScalarProperty Name="CoDate" ColumnName="CoDate" />
+								<ScalarProperty Name="CoReason" ColumnName="CoReason" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="TaLeaves">
+						<EntityTypeMapping TypeName="WorkDayModelNew.TaLeave">
+							<MappingFragment StoreEntitySet="TaLeave">
+								<ScalarProperty Name="CoId" ColumnName="CoId" />
+								<ScalarProperty Name="CoLeaveAccountId" ColumnName="CoLeaveAccountId" />
+								<ScalarProperty Name="CoUserID" ColumnName="CoUserID" />
+								<ScalarProperty Name="CoStartdate" ColumnName="CoStartdate" />
+								<ScalarProperty Name="CoEndDate" ColumnName="CoEndDate" />
+								<ScalarProperty Name="CoApplydate" ColumnName="CoApplydate" />
+								<ScalarProperty Name="coReason" ColumnName="coReason" />
+								<ScalarProperty Name="CoStatus" ColumnName="CoStatus" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="TaLogins">
+						<EntityTypeMapping TypeName="WorkDayModelNew.TaLogin">
+							<MappingFragment StoreEntitySet="TaLogin">
+								<ScalarProperty Name="CoId" ColumnName="CoId" />
+								<ScalarProperty Name="CoUserID" ColumnName="CoUserID" />
+								<ScalarProperty Name="CologinPassword" ColumnName="CologinPassword" />
+								<ScalarProperty Name="CoCreated" ColumnName="CoCreated" />
+								<ScalarProperty Name="CoUpdated" ColumnName="CoUpdated" />
+								<ScalarProperty Name="CoRole" ColumnName="CoRole" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<EntitySetMapping Name="TaMails">
+						<EntityTypeMapping TypeName="WorkDayModelNew.TaMail">
+							<MappingFragment StoreEntitySet="TaMail">
+								<ScalarProperty Name="CoId" ColumnName="CoId" />
+								<ScalarProperty Name="CoUserId" ColumnName="CoUserId" />
+								<ScalarProperty Name="CoMailType" ColumnName="CoMailType" />
+								<ScalarProperty Name="CoMailSubject" ColumnName="CoMailSubject" />
+								<ScalarProperty Name="CoSent" ColumnName="CoSent" />
+							</MappingFragment>
+						</EntityTypeMapping>
+					</EntitySetMapping>
+					<FunctionImportMapping FunctionImportName="get_data" FunctionName="WorkDayModelNew.Store.get_data">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="WorkDayModelNew.get_data_Result">
+								<ScalarProperty Name="CoId" ColumnName="CoId" />
+								<ScalarProperty Name="CoUserID" ColumnName="CoUserID" />
+								<ScalarProperty Name="CoLeaveType" ColumnName="CoLeaveType" />
+								<ScalarProperty Name="CoYear" ColumnName="CoYear" />
+								<ScalarProperty Name="CoCreated" ColumnName="CoCreated" />
+								<ScalarProperty Name="CoUpdated" ColumnName="CoUpdated" />
+								<ScalarProperty Name="CoOpening" ColumnName="CoOpening" />
+								<ScalarProperty Name="CoCredited" ColumnName="CoCredited" />
+								<ScalarProperty Name="CoAvailed" ColumnName="CoAvailed" />
+								<ScalarProperty Name="CoApplied" ColumnName="CoApplied" />
+								<ScalarProperty Name="coApproved" ColumnName="coApproved" />
+								<ScalarProperty Name="CoBalance" ColumnName="CoBalance" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+					<FunctionImportMapping FunctionImportName="get_data1" FunctionName="WorkDayModelNew.Store.get_data">
+						<ResultMapping>
+							<ComplexTypeMapping TypeName="WorkDayModelNew.get_data1_Result">
+								<ScalarProperty Name="CoId" ColumnName="CoId" />
+								<ScalarProperty Name="CoLeaveAccountId" ColumnName="CoLeaveAccountId" />
+								<ScalarProperty Name="CoUserID" ColumnName="CoUserID" />
+								<ScalarProperty Name="CoStartdate" ColumnName="CoStartdate" />
+								<ScalarProperty Name="CoEndDate" ColumnName="CoEndDate" />
+								<ScalarProperty Name="CoApplydate" ColumnName="CoApplydate" />
+								<ScalarProperty Name="coReason" ColumnName="coReason" />
+								<ScalarProperty Name="CoStatus" ColumnName="CoStatus" />
+							</ComplexTypeMapping>
+						</ResultMapping>
+					</FunctionImportMapping>
+				</EntityContainerMapping>
+			</Mapping>
+		</edmx:Mappings>
+	</edmx:Runtime>
+	<!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+	<Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+		<Connection>
+			<DesignerInfoPropertySet>
+				<DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+			</DesignerInfoPropertySet>
+		</Connection>
+		<Options>
+			<DesignerInfoPropertySet>
+				<DesignerProperty Name="ValidateOnBuild" Value="true" />
+				<DesignerProperty Name="EnablePluralization" Value="true" />
+				<DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+				<DesignerProperty Name="UseLegacyProvider" Value="false" />
+				<DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+			</DesignerInfoPropertySet>
+		</Options>
+		<!-- Diagram content (shape and connector positions) -->
+		<Diagrams></Diagrams>
+	</Designer>
+</edmx:Edmx>
